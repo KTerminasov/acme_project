@@ -2,7 +2,13 @@
 
 {% block content %}
 <form>
-    <table> {{ form }} </table>
-    <input type="submit" value="Submit"
-</form>  
+  <table> {{ form }} </table>
+  <input type="submit" value="Submit">
+</form> 
+{% with data=request.GET %}
+  {% if form.is_valid %}
+    <h2>Привет, {{ data.first_name}} {{ data.last_name}}
+  {% endif %} 
+{% endwith %}
+
 {% endblock %}
