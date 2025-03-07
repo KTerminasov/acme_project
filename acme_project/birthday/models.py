@@ -1,4 +1,6 @@
 from django.db import models
+# Импортируем функцию-валидатор.
+from .validators import real_age
 
 
 class Birthday(models.Model):
@@ -9,4 +11,15 @@ class Birthday(models.Model):
         help_text='Необязательное поле',
         max_length=20
     )
-    birthday = models.DateField('Дата рождения')
+    # Валидатор указывается в описании поля.
+    birthday = models.DateField('Дата рождения', validators=(real_age,))
+
+    class Meta:
+        # Ограничения
+        constraints = (
+            # Ограничения на уникальность
+            models.UniqueConstraint(
+                fields=('first_name', 'last_name', 'birthday'),
+                name='Unique person constraint',
+            ),
+        )
