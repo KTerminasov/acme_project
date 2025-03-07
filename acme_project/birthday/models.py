@@ -13,6 +13,7 @@ class Birthday(models.Model):
     )
     # Валидатор указывается в описании поля.
     birthday = models.DateField('Дата рождения', validators=(real_age,))
+    image = models.ImageField('Фото', blank=True, upload_to='birthdays_images')
 
     class Meta:
         # Ограничения

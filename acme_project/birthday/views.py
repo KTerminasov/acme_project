@@ -17,7 +17,11 @@ def birthday(request, pk=None):
 
     # Передаём в форму либо данные из запроса, либо None. 
     # В случае редактирования прикрепляем объект модели.
-    form = BirthdayForm(request.POST or None, instance=instance)
+    form = BirthdayForm(
+        request.POST or None,
+        # Файлы, переданные в запросе, указываются отдельно.
+        files=request.FILES or None,
+        instance=instance)
 
     context = {'form': form}
 
