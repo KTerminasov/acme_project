@@ -13,29 +13,17 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 
 
-class BirthdayMixin:
-    """Класс, хранящий повторяющися код из view-классов модели Birthday."""
-
-    # Модель, с которой работает класс. Он сам создаст форму на ее основе.
-    model = Birthday
-
-    # Используем только если форма создается от модели.
-    # # Поля, которые должны быть в форме
-    # fields = '__all__'
-
-    # namespace:name для перенаправления после заполнения формы.
-    success_url = reverse_lazy('birthday:list')
-
-
-class BirthdayCreateView(BirthdayMixin, CreateView):
+class BirthdayCreateView(CreateView):
     """View-класс для создания объектов модели Birthday."""
 
+    model = Birthday
     form_class = BirthdayForm
 
 
-class BirthdayUpdateView(BirthdayMixin, UpdateView):
+class BirthdayUpdateView(UpdateView):
     """View-класс для изменения объектов модели Birthday."""
 
+    model = Birthday
     form_class = BirthdayForm
 
 
@@ -52,8 +40,11 @@ class BirthdayListView(ListView):
     paginate_by = 10
 
 
-class BirthdayDeleteView(BirthdayMixin, DeleteView):
+class BirthdayDeleteView(DeleteView):
     """View-класс для удаления объектов модели Birthday."""
+
+    model = Birthday
+    success_url = reverse_lazy('birthday:list')
 
 
 class BirthdayDetailView(DetailView):
