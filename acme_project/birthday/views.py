@@ -27,22 +27,16 @@ class BirthdayMixin:
     success_url = reverse_lazy('birthday:list')
 
 
-class BirthdayFormMixin:
-    """Класс, хранящий повторяющися код для форм из view-классов модели Birthday."""
-
-    # Указываем имя формы, которую нужно использовать
-    form_class = BirthdayForm
-
-    # Шаблон. Базовое имя: имя-модели_form.html
-    template_name = 'birthday/birthday.html'
-
-
-class BirthdayCreateView(BirthdayMixin, BirthdayFormMixin, CreateView):
+class BirthdayCreateView(BirthdayMixin, CreateView):
     """View-класс для создания объектов модели Birthday."""
 
+    form_class = BirthdayForm
 
-class BirthdayUpdateView(BirthdayMixin, BirthdayFormMixin, UpdateView):
+
+class BirthdayUpdateView(BirthdayMixin, UpdateView):
     """View-класс для изменения объектов модели Birthday."""
+
+    form_class = BirthdayForm
 
 
 class BirthdayListView(ListView):
@@ -60,12 +54,6 @@ class BirthdayListView(ListView):
 
 class BirthdayDeleteView(BirthdayMixin, DeleteView):
     """View-класс для удаления объектов модели Birthday."""
-
-    model = Birthday
-    # Имя шаблона можно не указывать, тк оно соответствует рекомендуемому
-    # в документации: имя-модели_confirm_delete.html
-    # template_name = 'birthday/birthday_confirm_delete.html'
-    success_url = reverse_lazy('birthday:list')
 
 
 class BirthdayDetailView(DetailView):
