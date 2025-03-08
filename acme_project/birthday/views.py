@@ -4,8 +4,11 @@ from .utils import calculate_birthday_countdown
 from .models import Birthday
 # Импортируем класс пагинатора
 from django.core.paginator import Paginator
-# Импортируем view-классы ListView, CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+# Импортируем view-классы ListView, CreateView, UpdateView,
+# DeleteView, DetailView
+from django.views.generic import (
+    ListView, CreateView, UpdateView, DeleteView, DetailView
+)
 # Импортируем функцию для перенаправки после заполнения формы.
 from django.urls import reverse_lazy
 
@@ -63,3 +66,22 @@ class BirthdayDeleteView(BirthdayMixin, DeleteView):
     # в документации: имя-модели_confirm_delete.html
     # template_name = 'birthday/birthday_confirm_delete.html'
     success_url = reverse_lazy('birthday:list')
+
+
+class BirthdayDetailView(DetailView):
+    """View-класс для просмотра информации об объекте модели Birthday."""
+
+    model = Birthday
+
+    def get_context_data(self, **kwargs):
+        # Получим словарь с контекстом.
+        context = super().get_context_data(**kwargs)
+
+        # Добавим в словарь новый ключ.
+        context['birthday_countdown'] = calculate_birthday_countdown(
+            # Дату рождения берем из объекта в словаре context.
+            self.object.birthday
+        )
+
+        # Возвращаем словарь котекста.
+        return context
