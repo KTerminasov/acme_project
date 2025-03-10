@@ -2,6 +2,8 @@ from django import forms
 # Импортируем класс ошибки валидации.
 from django.core.exceptions import ValidationError
 from .models import Birthday
+# Импорт функции для отправки почты.
+from django.core.mail import send_mail
 
 
 # Множество с именами участников Ливерпульской четвёрки.
@@ -35,6 +37,14 @@ class BirthdayForm(forms.ModelForm):
 
         # Проверяем вхождение имени и фамилии во множество имен.
         if f'{first_name} {last_name}' in BEATLES:
+            # Отправка письма, если кто-то представился участником Beatles.
+            send_mail(
+                subject='Another Beatles member',
+                message=f'{first_name} {last_name} пытался опубликовать запись!',
+                from_email='birthday_form@acme.not',
+                recipient_list=['admin@acme.not'],
+                fail_silently=True,
+            )
             raise ValidationError(
                 'Мы тоже любим Битлз, но введите, пожалуйста, настоящее имя!'
             )
