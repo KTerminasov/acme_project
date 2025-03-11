@@ -90,6 +90,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Для отправки 
+# Для отправки писем
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+# Переадресация после логина.
+LOGIN_REDIRECT_URL = 'pages:homepage'
