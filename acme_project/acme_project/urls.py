@@ -27,3 +27,6 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),    
     # В конце добавляем к списку вызов функции static.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Переопределяем хендлер андреса view-функции с ошибкой 404.
+handler404 = 'core.views.page_not_found'
